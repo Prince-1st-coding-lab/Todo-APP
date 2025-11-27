@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Fix static folder path typo: 'puplic' → 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'puplic')));
 
 // API to fetch all tasks
 app.get('/api/task/all', (req, res) => {
@@ -64,3 +64,4 @@ app.put('/api/task/update', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+
