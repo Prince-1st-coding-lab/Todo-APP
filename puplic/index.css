@@ -1,0 +1,150 @@
+    :root {
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --text: #222;
+      --subtext: #555;
+      --primary: #4f46e5;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --task-bg: #f9fafb;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --subtext: #94a3b8;
+      --task-bg: #334155;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      transition: background 0.4s;
+    }
+
+    .app {
+      width: 450px;
+      background: var(--card);
+      border-radius: 22px;
+      padding: 25px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .mode-toggle {
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    .input-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .input-box input {
+      flex: 1;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      background: var(--task-bg);
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .add-btn {
+      background: var(--primary);
+      border: none;
+      color: #fff;
+      padding: 14px 18px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s;
+    }
+
+    .add-btn:hover { transform: scale(1.05); }
+
+    .task {
+      background: var(--task-bg);
+      border-radius: 16px;
+      padding: 15px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-15px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .task span {
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .task.completed span {
+      text-decoration: line-through;
+      color: var(--subtext);
+    }
+
+    .actions button {
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    footer{
+      position: relative;
+      display: flex;
+      justify-content: center;
+      color: var(--subtext);
+      font-weight: bold;
+    }
+    .done { color: var(--success); }
+    .delete { color: var(--danger); }
+  
