@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ Correct static folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'puplic')));
 
 // ================= FETCH ALL TASKS =================
 app.get('/api/task/all', (req, res) => {
@@ -78,3 +78,4 @@ app.put('/api/task/update', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
+
