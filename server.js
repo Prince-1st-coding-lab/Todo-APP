@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'puplic')));
 
 // ================= FETCH ALL TASKS =================
 app.get('/api/task/all', (req, res) => {
-  db.query('SELECT * FROM tasks ORDER BY status, id DESC', (err, rows) => {
+  db.query('SELECT * FROM task ORDER BY status, id DESC', (err, rows) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Database query failed' });
@@ -32,7 +32,7 @@ app.post('/api/task/new', (req, res) => {
   }
 
   db.query(
-    'INSERT INTO tasks (task_name, status) VALUES (?, 0)',
+    'INSERT INTO task (task_name, status) VALUES (?, 0)',
     [task_name],
     (err, result) => {
       if (err) {
@@ -48,7 +48,7 @@ app.post('/api/task/new', (req, res) => {
 app.delete('/api/task/delete', (req, res) => {
   const { task_id } = req.body;
 
-  db.query('DELETE FROM tasks WHERE id = ?', [task_id], (err) => {
+  db.query('DELETE FROM task WHERE id = ?', [task_id], (err) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Failed to delete task' });
@@ -62,7 +62,7 @@ app.put('/api/task/update', (req, res) => {
   const { new_status, id } = req.body;
 
   db.query(
-    'UPDATE tasks SET status = ? WHERE id = ?',
+    'UPDATE task SET status = ? WHERE id = ?',
     [new_status, id],
     (err) => {
       if (err) {
@@ -78,4 +78,5 @@ app.put('/api/task/update', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
+
 
