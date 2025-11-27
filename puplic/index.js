@@ -1,15 +1,16 @@
 // Load tasks from backend
 function loadtasks() {
-  fetch(`/api/task/all`)
+  fetch('/api/task/all')
     .then(res => res.json())
     .then(data => {
       const app = document.querySelector('.all-tasks');
-      app.innerHTML = ''; // clear existing tasks
+      app.innerHTML = '';
+
       data.forEach(task => {
         const taskDiv = document.createElement('div');
         taskDiv.classList.add('task');
         taskDiv.dataset.id = task.id;
-        taskDiv.dataset.status = task.status;
+
         if (task.status != 0) taskDiv.classList.add('completed');
 
         const span = document.createElement('span');
@@ -21,20 +22,19 @@ function loadtasks() {
         const doneBTN = document.createElement('button');
         doneBTN.classList.add('done');
         doneBTN.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-        doneBTN.dataset.id = task.id;
 
         const deleteBTN = document.createElement('button');
         deleteBTN.classList.add('delete');
         deleteBTN.innerHTML = `<i class="fa-solid fa-trash"></i>`;
-        deleteBTN.dataset.id = task.id;
 
-        // Delete functionality
+        // ✅ DELETE TASK
         deleteBTN.addEventListener('click', () => delete_data(task.id));
 
-        // Done functionality
+        // ✅ MARK COMPLETE
         doneBTN.addEventListener('click', () => {
+          const newStatus = taskDiv.classList.contains('completed') ? 0 : 1;
           taskDiv.classList.toggle('completed');
-          check(task.id, taskDiv.classList.contains('completed') ? 1 : 0);
+          check(task.id, newStatus);
         });
 
         actionDIV.appendChild(doneBTN);
@@ -45,3 +45,51 @@ function loadtasks() {
       });
     });
 }
+
+// ================= INSERT TASK =================
+function send_data() {
+  const input = document.getElementById('new-task');
+  const taskName = input.value.trim();
+
+  if (taskName === '') {
+    alert('Please enter a task');
+    return;
+  }
+
+  fetch('/api/task/new', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ task_name: taskName })
+  })
+  .then(res => res.json())
+  .then(() => {
+    input.value = '';
+    loadtasks();
+  })
+  .catch(err => console.error(err));
+}
+
+// ================= DELETE FUNCTION =================
+function delete_data(id) {
+  fetch('/api/task/delete', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ task_id: id })
+  })
+  .then(res => res.json())
+  .then(() => loadtasks());
+}
+
+// ================= UPDATE STATUS =================
+function check(id, status) {
+  fetch('/api/task/update', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: id, new_status: status })
+  })
+  .then(res => res.json())
+  .then(() => loadtasks());
+}
+
+// Auto load on page open
+document.addEventListener('DOMContentLoaded', loadtasks);
